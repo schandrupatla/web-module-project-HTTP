@@ -33,15 +33,17 @@ const App = (props) => {
         console.log("item-id:",res.data)
        const newMovies = movies.filter(movie=>movie.id !==res.data);
        setMovies(newMovies);
-        console.log("Filtered Movies:",movies);
         
       })
       .catch(err=>{
         console.log(err);
       })
   }
-  const addToFavorites = (movie) => {
-    //sree code
+
+  const addToFavorites = (id, movie) => {
+    //const favMovies = movies.find(movie=>movie.id!==id)
+     setFavoriteMovies([...favoriteMovies, movie]);
+    
   }
 
   return (
@@ -65,7 +67,7 @@ const App = (props) => {
             </Route>
 
             <Route path="/movies/:id">
-              <Movie deleteMovie={deleteMovie}/>
+              <Movie addToFavorites={addToFavorites} deleteMovie={deleteMovie}/>
             </Route>
 
             <Route path="/movies">

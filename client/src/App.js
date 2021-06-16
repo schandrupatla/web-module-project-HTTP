@@ -16,6 +16,7 @@ import axios from 'axios';
 const App = (props) => {
   const [movies, setMovies] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
 
   useEffect(()=>{
@@ -44,6 +45,9 @@ const App = (props) => {
     setFavoriteMovies([...favoriteMovies, movie]);
     
   }
+  const handleCancel = () => {
+    setShowModal(false);
+  }
 
   return (
     <div>
@@ -69,9 +73,10 @@ const App = (props) => {
             </Route>
 
             <Route path="/movies/delete" component ={DeleteMovieModal}/>
+            {/* {showModal && <DeleteMovieModal  deleteMovie = {deleteMovie} cancelFunction={handleCancel}/>} */}
 
             <Route path="/movies/:id">
-              <Movie addToFavorites={addToFavorites} deleteMovie = {deleteMovie}/>
+              <Movie setShowModal ={setShowModal} addToFavorites={addToFavorites} deleteMovie = {deleteMovie}/>
             </Route>          
 
             <Route path="/movies">

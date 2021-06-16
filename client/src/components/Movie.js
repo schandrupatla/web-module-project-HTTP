@@ -5,9 +5,10 @@ import axios from "axios";
 
 const Movie = (props) => {
 console.log("Movie Props:",props);
-  const { addToFavorites } = props;
+  const { addToFavorites, setShowModal } = props;
 
   const [movie, setMovie] = useState("");
+ 
 
   const { id } = useParams();
   const { push } = useHistory();
@@ -24,11 +25,9 @@ console.log("Movie Props:",props);
   }, [id]);
 
   const handleDeleteMovie = () => {
-    console.log("Delete:");
-     push("/movies/delete");
-    // window.location.href = "/movies/delete"
-    // props.deleteMovie(id);
-    // push('/movies');
+    //setShowModal(true);
+    props.deleteMovie(id);
+    push('/movies');
   };
   const handleFavoriteMovie = () => {
     // console.log("Id,Movie:", id, movie);

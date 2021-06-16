@@ -1,6 +1,20 @@
 import React from 'react';
+import { Link, useParams, useHistory } from "react-router-dom";
 
-const DeleteMovieModal = () => {
+const DeleteMovieModal = (props) => {
+
+    const {deleteMovie, cancelFunction} = props;
+    const { id } = useParams();
+    const { push } = useHistory();
+
+    const handleCancelFunction =()=>{
+        cancelFunction();
+    }
+    const handleDeleteFunction = ()=>{
+        deleteMovie(id);
+        push('/movies');
+    }
+
     return (<div id="deleteMovieModal">
         <div className="modal-dialog">
             <div className="modal-content">
@@ -14,8 +28,8 @@ const DeleteMovieModal = () => {
                         <p className="text-warning"><small>This action cannot be undone.</small></p>
                     </div>
                     <div className="modal-footer">
-                        <input type="button" className="btn btn-default" data-dismiss="modal" value="Cancel"/>
-                        <input type="submit" className="btn btn-danger" value="Delete"/>
+                        <input onClick={handleCancelFunction} type="button" className="btn btn-default" data-dismiss="modal" value="Cancel"/>
+                        <input onClick={handleDeleteFunction} type="submit" className="btn btn-danger" value="Delete"/>
                     </div>
                 </form>
             </div>

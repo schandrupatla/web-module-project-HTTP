@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
-const EditMovieForm = (props) => {
+const AddMovieForm = (props) => {
 	const { push } = useHistory();
 	// * [ ] Next, we need to grab the id being passed into the component through the url. Use the `useParams` hook to get the id value.
 	const {id} = useParams();
@@ -16,16 +16,6 @@ const EditMovieForm = (props) => {
 		metascore: 0,
 		description: ""
 	});
-	// * [ ] We need to be able to load in the current movie's attributes into our local form state. When `EditMovieForm` mount, retrieve our current id's movie from the api and save the data returned to local state.
-	useEffect(()=>{
-		axios.get(`http://localhost:5000/api/movies/${id}`)
-		.then(res=>{
-			setMovie(res.data);
-		})
-		.catch(err=>{
-			console.log(err);
-		})
-	},[])
 	
 	const handleChange = (e) => {
         setMovie({
@@ -36,13 +26,11 @@ const EditMovieForm = (props) => {
 	// * [ ] At this point, nothing happens when the edit form is submitted. Add in the api call needed to update the server with our updated movie data.
     const handleSubmit = (e) => {
 		e.preventDefault();
-		axios.put(`http://localhost:5000/api/movies/${id}`, movie)
+		axios.post(`http://localhost:5000/api/movies`, movie)
 		.then(res=>{
-			//console.log(res);
-			// * [ ] Now that we have access to `setMovies`, made sure the updated list of movies is saved to our global state.
 			props.setMovies(res.data);
-			// * [ ] Redirect the user to the currently edited movie's individual info page.
-			push(`/movies/${id}`);
+            push('/movies')
+
 		})
 		.catch(err=>{
 			console.log(err);
@@ -56,7 +44,7 @@ const EditMovieForm = (props) => {
 		<div className="modal-content">
 			<form onSubmit={handleSubmit}>
 				<div className="modal-header">						
-					<h4 className="modal-title">Editing <strong>{movie.title}</strong></h4>
+					<h4 className="modal-title">Add New Movie <strong>{movie.title}</strong></h4>
 				</div>
 				<div className="modal-body">					
 					<div className="form-group">
@@ -90,4 +78,4 @@ const EditMovieForm = (props) => {
 	</div>);
 }
 
-export default EditMovieForm;
+export default AddMovieForm;
